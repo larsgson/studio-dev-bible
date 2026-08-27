@@ -156,9 +156,6 @@ export default function App() {
     ...(answers.cart.includes('messaging') ? ['Preparing message templates for your audience'] : []),
     ...(answers.cart.includes('lesson_plan') ? ['Loading your lesson plan from the library'] : []),
     ...(answers.cart.includes('reading_plan') ? ['Laying out your reading plan day by day'] : []),
-    ...(answers.cart.includes('messaging') || answers.cart.includes('devotional')
-      ? ['Setting up WhatsApp / Telegram sharing']
-      : []),
     ...BUILD_STEPS_END,
   ]
 

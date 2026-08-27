@@ -1,7 +1,7 @@
 {
   "$schema": "./schema/module-questions.schema.json",
   "version": "0.2.0",
-  "note": "Replaces the earlier invented 'media-types.json'. In the real builder there is no standalone 'pick your media types' step - media/format choices are per-module questions instead (see the reference builder interview spec, 'module_questions'). Each question is asked only when its appliesTo module(s) are in the selected cart.",
+  "note": "Replaces the earlier invented 'media-types.json'. In the real builder there is no standalone 'pick your media types' step - media/format choices are per-module questions instead (see the reference builder interview spec, 'module_questions'). Each question is asked only when its appliesTo module(s) are in the selected cart. The reference spec's 'channels' question (WhatsApp/Telegram sharing) was removed here - this demo has no real sharing integration, so it shouldn't be presented as a selectable feature.",
   "sourceOfTruth": "src/app/studio/build/questions.ts",
   "selectionRule": "Keep a question when any id in its appliesTo intersects the chosen module cart; ask in fixed registry order.",
   "questions": [
@@ -28,14 +28,6 @@
       "kind": "single",
       "defaultPick": "yes",
       "options": ["yes", "no"]
-    },
-    {
-      "id": "channels",
-      "label": "Channels",
-      "appliesTo": ["messaging", "devotional"],
-      "kind": "multi",
-      "defaultMulti": ["whatsapp", "telegram"],
-      "options": ["whatsapp", "telegram"]
     },
     {
       "id": "focus",

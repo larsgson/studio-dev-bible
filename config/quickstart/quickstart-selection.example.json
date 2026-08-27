@@ -1,6 +1,6 @@
 {
   "$schema": "./schema/quickstart-selection.schema.json",
-  "note": "Rewritten to match the real answers_to_spec_mapping from the reference builder interview spec instead of the earlier invented shape.",
+  "note": "Rewritten to match the real answers_to_spec_mapping from the reference builder interview spec instead of the earlier invented shape. 'channels' (WhatsApp/Telegram sharing) removed - not a real feature in this demo, see module-questions.json.",
   "createdAt": "2026-08-27T00:00:00Z",
   "answers": {
     "audience_group": "adults",
@@ -9,7 +9,6 @@
     "cart": ["devotional", "lesson_plan"],
     "format": "both",
     "reflection_question": "yes",
-    "channels": ["whatsapp", "telegram"],
     "focus": ["discipleship"],
     "length": "full",
     "resources": ["video", "audio", "reading"]
@@ -22,7 +21,6 @@
     "audience_group": "adults",
     "format": "both",
     "reflection_question": true,
-    "channels": ["whatsapp", "telegram"],
     "lesson_plan": {
       "plan_id": "discipleship-8wk-001",
       "display_title": "Discipleship: The First Steps",

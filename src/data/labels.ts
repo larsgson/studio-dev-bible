@@ -16,9 +16,6 @@ export const OPTION_LABELS: Record<string, { title: string; sub?: string }> = {
   // reflection_question
   yes: { title: 'Yes, add a reflection question' },
   no: { title: 'No, just the Bible verse' },
-  // channels
-  whatsapp: { title: 'WhatsApp' },
-  telegram: { title: 'Telegram' },
   // focus
   discipleship: { title: 'Discipleship', sub: 'Growing as a follower of Jesus' },
   trauma_healing: { title: 'Trauma healing', sub: 'Finding hope after pain' },
@@ -47,10 +44,6 @@ export const QUESTION_PROMPTS: Record<string, { prompt: string; rationale?: stri
   reflection_question: {
     prompt: 'Should the daily Bible verse include a reflection question?',
     rationale: 'Reflection questions are not AI generated.',
-  },
-  channels: {
-    prompt: 'Which platforms do you want to use for sharing the messages?',
-    rationale: 'We currently support WhatsApp and Telegram.',
   },
   focus: {
     prompt: 'Choose the core themes you want to offer to your audience.',
