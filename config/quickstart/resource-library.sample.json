@@ -1,0 +1,77 @@
+{
+  "$schema": "./schema/resource-library.schema.json",
+  "version": "0.2.0",
+  "note": "Tiny sample of the big BCV-indexed resource library the wizard filters against. Real library is expected to hold thousands of entries, lazily loaded/paginated by language+mediaType+bcvRange. languageId now uses the live builder codes ('en'/'ar') and targetGroupIds use the real audience_group ids (kids/teens/adults/women/pastors) from the reference builder interview spec. Non-live languages (spa/swh/...) moved to 'plannedExpansion' to match languages.json.",
+  "resources": [
+    {
+      "id": "bible-en-niv",
+      "type": "bible-version",
+      "languageId": "en",
+      "title": "New International Version",
+      "abbreviation": "NIV",
+      "bcvCoverage": "GEN.1.1-REV.22.21",
+      "mediaAvailable": ["text", "audio"],
+      "license": "restricted",
+      "note": "The canonical translation for the 'en' language option in the live builder."
+    },
+    {
+      "id": "bible-ar-nav",
+      "type": "bible-version",
+      "languageId": "ar",
+      "title": "New Arabic Version (Ketab El Hayat)",
+      "abbreviation": "NAV",
+      "bcvCoverage": "GEN.1.1-REV.22.21",
+      "mediaAvailable": ["text"],
+      "license": "restricted",
+      "note": "The canonical translation for the 'ar' language option in the live builder."
+    },
+    {
+      "id": "resourceset-en-kids-life-of-jesus",
+      "type": "scripture-resource-set",
+      "languageId": "en",
+      "title": "Life of Jesus for Kids",
+      "targetGroupIds": ["kids"],
+      "bcvCoverage": "MAT.1.1-JHN.21.25",
+      "mediaAvailable": ["picture", "audio", "video"],
+      "license": "cc-by"
+    },
+    {
+      "id": "resourceset-en-teens-romans",
+      "type": "scripture-resource-set",
+      "languageId": "en",
+      "title": "Romans for Teens: 12-Lesson Study",
+      "targetGroupIds": ["teens"],
+      "bcvCoverage": "ROM.1.1-ROM.16.27",
+      "mediaAvailable": ["text", "video"],
+      "license": "cc-by"
+    },
+    {
+      "id": "resourceset-en-adults-discipleship",
+      "type": "scripture-resource-set",
+      "languageId": "en",
+      "title": "Discipleship: The First Steps",
+      "targetGroupIds": ["adults"],
+      "bcvCoverage": "PRO.1.1-PRO.31.31",
+      "mediaAvailable": ["text", "audio", "video"],
+      "license": "cc-by-nd",
+      "note": "Sample lesson_plan library entry referenced by quickstart-selection.example.json (plan_id discipleship-8wk-001)."
+    }
+  ],
+  "plannedExpansion": {
+    "note": "Aspirational/dummy - resources for languages not yet live in the builder (see languages.json#/plannedExpansion).",
+    "resources": [
+      {
+        "id": "bible-spa-rvr",
+        "languageId": "spa",
+        "title": "Reina-Valera",
+        "abbreviation": "RVR"
+      },
+      {
+        "id": "resourceset-swh-adults-fellowship",
+        "languageId": "swh",
+        "title": "Men's Fellowship Devotional Series",
+        "targetGroupIds": ["adults"]
+      }
+    ]
+  }
+}

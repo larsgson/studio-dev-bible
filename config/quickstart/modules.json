@@ -1,0 +1,46 @@
+{
+  "$schema": "./schema/modules.schema.json",
+  "version": "0.2.0",
+  "note": "Replaces the earlier invented 'content-modes.json' (lesson-series vs scripture-navigation). Real system is a MULTI-select cart of independent modules that all live under one app/spec (see the reference builder interview spec, 'module_cart'). No modules preselected.",
+  "sourceOfTruth": "src/app/studio/build/questions.ts",
+  "allowMultiSelect": true,
+  "modules": [
+    {
+      "id": "messaging",
+      "label": "Scripture Messaging",
+      "sub": "Personal messages anchored in a fitting Bible verse - encouragement, follow-up, invitations, prayer, celebrations.",
+      "cartOnly": true,
+      "note": "Expands at build time into the selected message-theme mode ids; never stored as 'messaging' in the spec.",
+      "active": true
+    },
+    {
+      "id": "devotional",
+      "label": "Daily Bible Verse",
+      "sub": "One Bible verse each day for the whole team, with optional audio and a reflection question, made to be shared into group chats.",
+      "active": true
+    },
+    {
+      "id": "lesson_plan",
+      "label": "Lesson Plan",
+      "sub": "Curated multi-week lesson plans around themes like discipleship, trauma healing, and Bible study, matched to your audience and their journey of faith.",
+      "active": true
+    },
+    {
+      "id": "bible_reader",
+      "label": "Bible Reader",
+      "sub": "A guided reader for one or two Bible books of your choice, with audio, study notes, highlights, and personal notes.",
+      "active": true
+    },
+    {
+      "id": "reading_plan",
+      "label": "Reading Plan",
+      "sub": "A day-by-day journey through a book of the Bible - whole chapters at a steady pace, with each reader moving at their own speed.",
+      "active": true
+    }
+  ],
+  "gatingRules": {
+    "audience_kids": "drop 'messaging'",
+    "faith_seekers": "drop 'messaging'",
+    "language_no_plans": "drop 'lesson_plan' when the chosen language has no published plans in the library"
+  }
+}

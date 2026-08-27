@@ -1,0 +1,37 @@
+{
+  "$schema": "./schema/languages.schema.json",
+  "version": "0.2.0",
+  "note": "Superseded by real data from the reference builder interview spec (question id 'language'). The live builder only offers 2 languages today (single-select, not multi as originally guessed); the earlier 7-language ISO-639-3 dummy list is kept below as 'plannedExpansion' since the library is expected to grow quickly, but only 'liveOptions' reflects what the builder actually offers right now.",
+  "sourceOfTruth": "src/app/studio/build/questions.ts",
+  "allowMultiSelect": false,
+  "liveOptions": [
+    {
+      "id": "en",
+      "label": "English",
+      "canonicalTranslation": "NIV",
+      "direction": "ltr",
+      "active": true
+    },
+    {
+      "id": "ar",
+      "label": "العربية (Arabic)",
+      "canonicalTranslation": "NAV “Ketab El Hayat”",
+      "direction": "rtl",
+      "active": true
+    }
+  ],
+  "downstreamEffects": [
+    "Drives Scripture source, UI strings, RTL layout and fonts in the generated PWA.",
+    "Filters the lesson-plan library: the Lesson Plan module card is HIDDEN when the library has no plans in the chosen language (English-only today, checked via /api/lesson-plans/languages)."
+  ],
+  "plannedExpansion": {
+    "note": "Aspirational/dummy — not wired into the live builder yet. Kept as a placeholder for when more languages are added to the resource library.",
+    "candidates": [
+      { "id": "spa", "iso639_3": "spa", "name": "Spanish" },
+      { "id": "fra", "iso639_3": "fra", "name": "French" },
+      { "id": "swh", "iso639_3": "swh", "name": "Swahili" },
+      { "id": "cmn", "iso639_3": "cmn", "name": "Mandarin Chinese" },
+      { "id": "hin", "iso639_3": "hin", "name": "Hindi" }
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "./schema/faith-levels.schema.json",
+  "version": "0.2.0",
+  "note": "New catalog, not present in the earlier dummy set. Mirrors question id 'faith_level' from the reference builder interview spec. Sets message voice, not just content difficulty.",
+  "sourceOfTruth": "src/app/studio/build/questions.ts",
+  "allowMultiSelect": false,
+  "levels": [
+    { "id": "scholars", "label": "Scholars", "sub": "Studying Scripture in depth", "active": true },
+    { "id": "believers", "label": "Believers", "sub": "Walking with Christ", "active": true },
+    { "id": "new_to_faith", "label": "New to faith", "sub": "Just beginning", "active": true },
+    { "id": "seekers", "label": "Seekers", "sub": "Exploring honest questions", "active": true }
+  ],
+  "optionPruning": {
+    "kids_or_teens": "drop 'scholars'",
+    "pastors": "drop 'seekers'"
+  },
+  "downstreamEffects": [
+    "Gates the module cart: 'messaging' is dropped entirely when faith === 'seekers'.",
+    "faithToTone(): scholars|believers -> spec.audience='pastors' (voice); new_to_faith|seekers -> spec.audience='new_believers' (voice). Legacy enum names kept for spec backward compatibility, distinct from audience_group.",
+    "Sent to the lesson-plan matcher as `faithLevel` (weight 0.25)."
+  ]
+}

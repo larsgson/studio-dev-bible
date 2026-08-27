@@ -1,0 +1,70 @@
+{
+  "$schema": "./schema/module-questions.schema.json",
+  "version": "0.2.0",
+  "note": "Replaces the earlier invented 'media-types.json'. In the real builder there is no standalone 'pick your media types' step - media/format choices are per-module questions instead (see the reference builder interview spec, 'module_questions'). Each question is asked only when its appliesTo module(s) are in the selected cart.",
+  "sourceOfTruth": "src/app/studio/build/questions.ts",
+  "selectionRule": "Keep a question when any id in its appliesTo intersects the chosen module cart; ask in fixed registry order.",
+  "questions": [
+    {
+      "id": "themes",
+      "label": "Message themes",
+      "appliesTo": ["messaging"],
+      "kind": "multi",
+      "defaultMulti": ["follow_up", "encouragement", "invitation", "prayer", "celebration"],
+      "options": ["follow_up", "encouragement", "invitation", "prayer", "celebration"]
+    },
+    {
+      "id": "format",
+      "label": "Format",
+      "appliesTo": ["devotional"],
+      "kind": "single",
+      "defaultPick": "both",
+      "options": ["text", "audio", "both"]
+    },
+    {
+      "id": "reflection_question",
+      "label": "Reflection",
+      "appliesTo": ["devotional"],
+      "kind": "single",
+      "defaultPick": "yes",
+      "options": ["yes", "no"]
+    },
+    {
+      "id": "channels",
+      "label": "Channels",
+      "appliesTo": ["messaging", "devotional"],
+      "kind": "multi",
+      "defaultMulti": ["whatsapp", "telegram"],
+      "options": ["whatsapp", "telegram"]
+    },
+    {
+      "id": "focus",
+      "label": "Main focus",
+      "appliesTo": ["lesson_plan"],
+      "kind": "multi",
+      "defaultMulti": ["discipleship"],
+      "options": ["discipleship", "trauma_healing", "bible_study", "devotional"],
+      "note": "Deliberately no free-text 'other' - matching is deterministic tag scoring."
+    },
+    {
+      "id": "length",
+      "label": "Length",
+      "appliesTo": ["lesson_plan"],
+      "kind": "single",
+      "defaultPick": "full",
+      "options": ["short", "full", "season", "open"]
+    },
+    {
+      "id": "resources",
+      "label": "Resources",
+      "appliesTo": ["lesson_plan"],
+      "kind": "multi",
+      "defaultMulti": ["video", "audio", "reading"],
+      "options": ["video", "audio", "reading", "printable"]
+    }
+  ],
+  "notAskedAsQuestions": {
+    "reading_plan": "Book picker (up to 4 books) + chapters-per-day stepper on a dedicated screen, not an interview question.",
+    "bible_reader": "Book picker (up to 2 books) + feature toggles (audio, highlights, notes, study_notes) on a dedicated screen, not an interview question."
+  }
+}

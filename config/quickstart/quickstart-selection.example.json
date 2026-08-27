@@ -1,0 +1,32 @@
+{
+  "$schema": "./schema/quickstart-selection.schema.json",
+  "note": "Rewritten to match the real answers_to_spec_mapping from the reference builder interview spec instead of the earlier invented shape.",
+  "createdAt": "2026-08-27T00:00:00Z",
+  "answers": {
+    "audience_group": "adults",
+    "faith_level": "new_to_faith",
+    "language": "en",
+    "cart": ["devotional", "lesson_plan"],
+    "format": "both",
+    "reflection_question": "yes",
+    "channels": ["whatsapp", "telegram"],
+    "focus": ["discipleship"],
+    "length": "full",
+    "resources": ["video", "audio", "reading"]
+  },
+  "spec": {
+    "tool_name": "Our Ministry Toolkit",
+    "purpose_modes": ["devotional", "lesson_plan"],
+    "language": "en",
+    "audience": "new_believers",
+    "audience_group": "adults",
+    "format": "both",
+    "reflection_question": true,
+    "channels": ["whatsapp", "telegram"],
+    "lesson_plan": {
+      "plan_id": "discipleship-8wk-001",
+      "display_title": "Discipleship: The First Steps",
+      "enabled_resources": ["video", "audio", "reading"]
+    }
+  }
+}

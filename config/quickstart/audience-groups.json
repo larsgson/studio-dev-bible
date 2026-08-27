@@ -1,0 +1,20 @@
+{
+  "$schema": "./schema/audience-groups.schema.json",
+  "version": "0.2.0",
+  "note": "Aligned to the reference builder interview spec (question id 'audience_group'). Single-select, asked first, universal (not gated by module cart).",
+  "sourceOfTruth": "src/app/studio/build/questions.ts",
+  "allowMultiSelect": false,
+  "groups": [
+    { "id": "kids", "label": "Kids", "active": true },
+    { "id": "teens", "label": "Teens", "active": true },
+    { "id": "adults", "label": "Adults", "active": true },
+    { "id": "women", "label": "Women", "active": true },
+    { "id": "pastors", "label": "Pastors & leaders", "active": true }
+  ],
+  "downstreamEffects": [
+    "Prunes faith-level options: kids|teens drop 'scholars'; pastors drop 'seekers'.",
+    "Gates the module cart: 'messaging' is dropped entirely when audience === 'kids'.",
+    "Sent to the lesson-plan matcher as `audience` (weight 0.25).",
+    "Stored on the spec as optional `audience_group`."
+  ]
+}

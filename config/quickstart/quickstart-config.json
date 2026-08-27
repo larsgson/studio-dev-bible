@@ -1,0 +1,129 @@
+{
+  "$schema": "./schema/quickstart-config.schema.json",
+  "version": "0.2.0",
+  "appName": "Dev Bible Studio",
+  "note": "Rewritten to mirror the reference builder interview spec instead of the earlier invented wizard. Catalog files stay separate/swappable so growth (more languages, modules, questions) is additive.",
+  "sourceOfTruth": {
+    "questions_registry": "src/app/studio/build/questions.ts",
+    "wizard_component": "src/app/studio/build/UnifiedBuilder.tsx",
+    "output_contract": "src/lib/spec.ts (Zod toolSpecInputSchema)",
+    "create_endpoint": "src/app/api/tools/route.ts (POST /api/tools)"
+  },
+  "steps": [
+    {
+      "order": 1,
+      "id": "audience_group",
+      "phase": "audience",
+      "label": "Audience",
+      "type": "single-select",
+      "catalog": "./audience-groups.json",
+      "catalogKey": "groups",
+      "universal": true,
+      "required": true,
+      "dependsOn": null
+    },
+    {
+      "order": 2,
+      "id": "faith_level",
+      "phase": "faith",
+      "label": "Faith level",
+      "type": "single-select",
+      "catalog": "./faith-levels.json",
+      "catalogKey": "levels",
+      "universal": true,
+      "required": true,
+      "dependsOn": "audience_group",
+      "pruning": "kids|teens drop 'scholars'; pastors drop 'seekers'"
+    },
+    {
+      "order": 3,
+      "id": "language",
+      "phase": "language",
+      "label": "Language",
+      "type": "single-select",
+      "catalog": "./languages.json",
+      "catalogKey": "liveOptions",
+      "universal": true,
+      "required": true,
+      "dependsOn": null
+    },
+    {
+      "order": 4,
+      "id": "module_cart",
+      "phase": "cart",
+      "label": "Pick your modules",
+      "type": "multi-select",
+      "catalog": "./modules.json",
+      "catalogKey": "modules",
+      "required": true,
+      "minSelections": 1,
+      "dependsOn": ["audience_group", "faith_level", "language"],
+      "gatingRef": "modules.json#/gatingRules"
+    },
+    {
+      "order": 5,
+      "id": "module_interview",
+      "phase": "interview",
+      "label": "Shape each module",
+      "type": "dynamic-question-list",
+      "catalog": "./module-questions.json",
+      "catalogKey": "questions",
+      "selectionRule": "questionsForCart(cart)",
+      "required": false,
+      "dependsOn": "module_cart"
+    },
+    {
+      "order": 6,
+      "id": "lesson_plan_subflow",
+      "phase": "recommending|recommendations|preview",
+      "label": "Match, choose, and preview a lesson plan",
+      "type": "sub-flow",
+      "condition": "module_cart includes 'lesson_plan'",
+      "endpoint": "POST /api/lesson-plans/match then GET /api/lesson-plans/{planId}",
+      "dependsOn": "module_interview"
+    },
+    {
+      "order": 7,
+      "id": "reading_plan_subflow",
+      "phase": "readingplan_books",
+      "label": "Pick books and pace for the reading plan",
+      "type": "sub-flow",
+      "condition": "module_cart includes 'reading_plan'",
+      "dependsOn": "module_interview"
+    },
+    {
+      "order": 8,
+      "id": "bible_reader_subflow",
+      "phase": "reader_books",
+      "label": "Pick books and features for the Bible reader",
+      "type": "sub-flow",
+      "condition": "module_cart includes 'bible_reader'",
+      "dependsOn": "module_interview"
+    },
+    {
+      "order": 9,
+      "id": "name",
+      "phase": "name",
+      "label": "Name your Bible app",
+      "type": "text-input",
+      "maxLength": 60,
+      "required": true,
+      "dependsOn": ["lesson_plan_subflow", "reading_plan_subflow", "bible_reader_subflow"]
+    },
+    {
+      "order": 10,
+      "id": "build",
+      "phase": "building",
+      "label": "Build my Bible app",
+      "type": "action",
+      "endpoint": "POST /api/tools",
+      "returns": ["tool_id", "url", "edit_key"],
+      "dependsOn": "name"
+    }
+  ],
+  "extensionPoints": {
+    "note": "Where future growth is expected to happen fastest.",
+    "catalogs": ["languages", "modules", "module-questions", "resource-library"],
+    "growthStrategy": "New languages/modules/questions are additive edits to their catalog file; the wizard steps/gating logic does not need to change."
+  }
+}
