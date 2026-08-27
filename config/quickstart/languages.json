@@ -1,7 +1,7 @@
 {
   "$schema": "./schema/languages.schema.json",
-  "version": "0.2.0",
-  "note": "Superseded by real data from the reference builder interview spec (question id 'language'). The live builder only offers 2 languages today (single-select, not multi as originally guessed); the earlier 7-language ISO-639-3 dummy list is kept below as 'plannedExpansion' since the library is expected to grow quickly, but only 'liveOptions' reflects what the builder actually offers right now.",
+  "version": "0.3.0",
+  "note": "Superseded by real data from the reference builder interview spec (question id 'language'). The live builder only offers 2 languages today (single-select, not multi as originally guessed). 'scriptureCoverage' on each entry is real, sourced via the bible-tool-navigator MCP server (navigator_lookup_language, Alliance content catalog) — Alliance partners only, so 'not listed' never means 'does not exist' elsewhere. Rights are NOT included in that catalog; canonicalTranslation licensing must still be verified with the named partner before use.",
   "sourceOfTruth": "src/app/studio/build/questions.ts",
   "allowMultiSelect": false,
   "liveOptions": [
@@ -10,14 +10,26 @@
       "label": "English",
       "canonicalTranslation": "NIV",
       "direction": "ltr",
-      "active": true
+      "active": true,
+      "scriptureCoverage": {
+        "iso639_3": "eng",
+        "totalWorks": 59,
+        "modes": ["audio", "text", "video"],
+        "note": "Broad multi-partner coverage (FCBH, Biblica, YouVersion, OneHope, ...) - KJV/NIV/ESV/NLT/WEB among the works listed."
+      }
     },
     {
       "id": "ar",
       "label": "العربية (Arabic)",
       "canonicalTranslation": "NAV “Ketab El Hayat”",
       "direction": "rtl",
-      "active": true
+      "active": true,
+      "scriptureCoverage": {
+        "iso639_3": "arb",
+        "totalWorks": 21,
+        "modes": ["audio", "text", "video"],
+        "note": "Matched as Standard Arabic (arb); includes Ketab El Hayat / New Arabic Version (the app's canonicalTranslation), Van Dyck, Sharif Version."
+      }
     }
   ],
   "downstreamEffects": [
@@ -25,13 +37,38 @@
     "Filters the lesson-plan library: the Lesson Plan module card is HIDDEN when the library has no plans in the chosen language (English-only today, checked via /api/lesson-plans/languages)."
   ],
   "plannedExpansion": {
-    "note": "Aspirational/dummy — not wired into the live builder yet. Kept as a placeholder for when more languages are added to the resource library.",
+    "note": "Not wired into the live builder yet. scriptureCoverage is real (same source as liveOptions), so this now reflects what Scripture actually exists per language rather than a guess - useful for prioritizing which language to add next.",
     "candidates": [
-      { "id": "spa", "iso639_3": "spa", "name": "Spanish" },
-      { "id": "fra", "iso639_3": "fra", "name": "French" },
-      { "id": "swh", "iso639_3": "swh", "name": "Swahili" },
-      { "id": "cmn", "iso639_3": "cmn", "name": "Mandarin Chinese" },
-      { "id": "hin", "iso639_3": "hin", "name": "Hindi" }
+      {
+        "id": "spa",
+        "iso639_3": "spa",
+        "name": "Spanish",
+        "scriptureCoverage": { "totalWorks": 23, "modes": ["audio", "text", "video"], "note": "Reina Valera (multiple editions), NVI, Dios Habla Hoy." }
+      },
+      {
+        "id": "fra",
+        "iso639_3": "fra",
+        "name": "French",
+        "scriptureCoverage": { "totalWorks": 24, "modes": ["audio", "text", "video"], "note": "Segond family, Parole de Vie, Bible du Semeur." }
+      },
+      {
+        "id": "swh",
+        "iso639_3": "swh",
+        "name": "Swahili",
+        "scriptureCoverage": { "totalWorks": 12, "modes": ["audio", "text", "video"], "note": "Matched as Swahili (individual language, swh). Neno / Kiswahili Contemporary Version, Union Version." }
+      },
+      {
+        "id": "cmn",
+        "iso639_3": "cmn",
+        "name": "Mandarin Chinese",
+        "scriptureCoverage": { "totalWorks": 9, "modes": ["audio", "video"], "note": "Chinese Contemporary Bible, Revised Chinese Union (Shen Edition), Simplified Union Version - mostly FCBH audio + film; no dedicated text-mode record in this catalog." }
+      },
+      {
+        "id": "hin",
+        "iso639_3": "hin",
+        "name": "Hindi",
+        "scriptureCoverage": { "totalWorks": 19, "modes": ["audio", "text", "video"], "note": "Indian Revised Version, Hindi Contemporary Version, Biblica Study Bible." }
+      }
     ]
   }
 }

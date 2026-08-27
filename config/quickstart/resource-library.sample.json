@@ -1,7 +1,7 @@
 {
   "$schema": "./schema/resource-library.schema.json",
-  "version": "0.2.0",
-  "note": "Tiny sample of the big BCV-indexed resource library the wizard filters against. Real library is expected to hold thousands of entries, lazily loaded/paginated by language+mediaType+bcvRange. languageId now uses the live builder codes ('en'/'ar') and targetGroupIds use the real audience_group ids (kids/teens/adults/women/pastors) from the reference builder interview spec. Non-live languages (spa/swh/...) moved to 'plannedExpansion' to match languages.json.",
+  "version": "0.3.0",
+  "note": "Small sample of the big BCV-indexed resource library the wizard filters against. Real library is expected to hold thousands of entries, lazily loaded/paginated by language+mediaType+bcvRange. Entries below now carry an optional 'groundedIn' block sourced via the bible-tool-navigator MCP server (Bible Tool Navigator curated set / global inventory) where a real tool or dataset was found to back that entry - deliberately kept to a handful of representative entries, not a dump of the full datasets (~53 curated, 261 inventory). 'groundedIn.rightsPosture'/'licensePosture' are postures to verify with the named rights holder, never a grant to use. 'relevantModules' is wiring metadata (not from the Navigator) so the app can filter this catalog by the module cart step in modules.json.",
   "resources": [
     {
       "id": "bible-en-niv",
@@ -12,7 +12,16 @@
       "bcvCoverage": "GEN.1.1-REV.22.21",
       "mediaAvailable": ["text", "audio"],
       "license": "restricted",
-      "note": "The canonical translation for the 'en' language option in the live builder."
+      "note": "The canonical translation for the 'en' language option in the live builder.",
+      "relevantModules": ["messaging", "devotional", "lesson_plan", "bible_reader", "reading_plan"],
+      "groundedIn": {
+        "source": "data-source",
+        "navigatorId": "bible-brain",
+        "name": "Bible Brain API (FCBH)",
+        "detail": "Real API for text+audio+video Scripture content, keyed per translation; en has 59 catalogued works via the Alliance content catalog.",
+        "licensePosture": "mixed (per content set)",
+        "sourceUrl": "https://4.dbt.io/api"
+      }
     },
     {
       "id": "bible-ar-nav",
@@ -23,7 +32,16 @@
       "bcvCoverage": "GEN.1.1-REV.22.21",
       "mediaAvailable": ["text"],
       "license": "restricted",
-      "note": "The canonical translation for the 'ar' language option in the live builder."
+      "note": "The canonical translation for the 'ar' language option in the live builder; confirmed listed under Standard Arabic (arb) in the Alliance content catalog.",
+      "relevantModules": ["messaging", "devotional", "lesson_plan", "bible_reader", "reading_plan"],
+      "groundedIn": {
+        "source": "curated",
+        "navigatorId": "bible-is",
+        "name": "Hosanna Audio Bible App (Bible.is, FCBH)",
+        "detail": "Deploy now / Retained. Free audio Bible app; a real option for delivering ar audio Scripture.",
+        "rightsPosture": "varies per language - free app, licence per content set",
+        "sourceUrl": "https://www.faithcomesbyhearing.com/audio-bible-resources/bible-is"
+      }
     },
     {
       "id": "resourceset-en-kids-life-of-jesus",
@@ -33,17 +51,28 @@
       "targetGroupIds": ["kids"],
       "bcvCoverage": "MAT.1.1-JHN.21.25",
       "mediaAvailable": ["picture", "audio", "video"],
-      "license": "cc-by"
+      "license": "cc-by",
+      "note": "Still a dummy entry - no curated/inventory match found for a kids-specific Life-of-Jesus set in this pass.",
+      "relevantModules": ["lesson_plan", "bible_reader", "reading_plan"]
     },
     {
-      "id": "resourceset-en-teens-romans",
+      "id": "resourceset-en-teens-reach4life",
       "type": "scripture-resource-set",
       "languageId": "en",
-      "title": "Romans for Teens: 12-Lesson Study",
+      "title": "Reach4Life",
       "targetGroupIds": ["teens"],
       "bcvCoverage": "ROM.1.1-ROM.16.27",
       "mediaAvailable": ["text", "video"],
-      "license": "cc-by"
+      "license": "restricted",
+      "note": "Replaces the earlier dummy 'Romans for Teens' with a real Biblica discipleship curriculum aimed at teens.",
+      "relevantModules": ["lesson_plan"],
+      "groundedIn": {
+        "source": "inventory",
+        "navigatorId": "reach4life",
+        "productClass": "discipleship-curriculum",
+        "evidenceLevel": "source-verified-partial",
+        "licensePosture": "restricted"
+      }
     },
     {
       "id": "resourceset-en-adults-discipleship",
@@ -54,11 +83,37 @@
       "bcvCoverage": "PRO.1.1-PRO.31.31",
       "mediaAvailable": ["text", "audio", "video"],
       "license": "cc-by-nd",
-      "note": "Sample lesson_plan library entry referenced by quickstart-selection.example.json (plan_id discipleship-8wk-001)."
+      "note": "Sample lesson_plan library entry referenced by quickstart-selection.example.json (plan_id discipleship-8wk-001). Still a placeholder title/BCV range, but the underlying 'focus' options it maps to (discipleship/trauma_healing/bible_study) are each grounded below.",
+      "relevantModules": ["lesson_plan"],
+      "focusMatches": [
+        { "focus": "discipleship", "groundedIn": { "source": "inventory", "navigatorId": "reach4life", "licensePosture": "restricted" } },
+        { "focus": "trauma_healing", "groundedIn": { "source": "inventory", "navigatorId": "bible-based-trauma-healing", "name": "Bible-based Trauma Healing (ABS Trauma Healing Institute)", "productClass": "discipleship-curriculum", "evidenceLevel": "source-verified-partial", "licensePosture": "restricted", "sourceUrl": "https://traumahealinginstitute.org" } },
+        { "focus": "bible_study", "groundedIn": { "source": "inventory", "navigatorId": "discovery-bible-study", "name": "Discovery Bible Study", "productClass": "discipleship-curriculum", "evidenceLevel": "source-verified-partial", "licensePosture": "unknown" } }
+      ]
+    },
+    {
+      "id": "resourceset-en-bible-reader",
+      "type": "scripture-resource-set",
+      "languageId": "en",
+      "title": "AndBible: Bible Study",
+      "targetGroupIds": ["adults", "pastors"],
+      "bcvCoverage": "GEN.1.1-REV.22.21",
+      "mediaAvailable": ["text", "audio"],
+      "license": "open",
+      "note": "Real match for the bible_reader module: an open-source reader app with study features (matches bible_reader's audio + study notes + highlights + notes concept).",
+      "relevantModules": ["bible_reader"],
+      "groundedIn": {
+        "source": "inventory",
+        "navigatorId": "andbible-bible-study",
+        "productClass": "bible-study-reader",
+        "evidenceLevel": "verified-current",
+        "licensePosture": "open (app GPL-3.0; loaded Scripture modules carry their own licence)",
+        "sourceUrl": "https://play.google.com/store/apps/details?id=net.bible.android.activity"
+      }
     }
   ],
   "plannedExpansion": {
-    "note": "Aspirational/dummy - resources for languages not yet live in the builder (see languages.json#/plannedExpansion).",
+    "note": "Aspirational/dummy - resources for languages not yet live in the builder (see languages.json#/plannedExpansion). Not researched via the Navigator in this pass.",
     "resources": [
       {
         "id": "bible-spa-rvr",

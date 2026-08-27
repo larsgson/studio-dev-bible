@@ -1,15 +1,19 @@
+import type { ReactNode } from 'react'
+
 export function OptionCard({
   title,
   sub,
   selected,
   onClick,
   recommended,
+  badge,
 }: {
   title: string
   sub?: string
   selected: boolean
   onClick: () => void
   recommended?: boolean
+  badge?: ReactNode
 }) {
   return (
     <button
@@ -33,6 +37,7 @@ export function OptionCard({
           )}
         </span>
         {sub && <span className="mt-0.5 block text-sm text-parchment/50">{sub}</span>}
+        {badge && <span className="mt-2 block">{badge}</span>}
       </span>
       <span
         className={[
